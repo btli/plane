@@ -4,10 +4,21 @@ import os
 # Third party imports
 from rest_framework.throttling import SimpleRateThrottle
 
+# Module imports
+from plane.license.utils.instance_value import get_configuration_value
+
 
 class ApiKeyRateThrottle(SimpleRateThrottle):
     scope = "api_key"
-    rate = os.environ.get("API_KEY_RATE_LIMIT", "60/minute")
+
+    def __init__(self):
+        super().__init__()
+        # Override the rate attribute dynamically from instance configuration
+        (rate_limit,) = get_configuration_value(
+            [{"key": "RATE_LIMIT_API_KEY", "default": os.environ.get("API_KEY_RATE_LIMIT", "60/minute")}]
+        )
+        self.rate = rate_limit or "60/minute"
+        self.num_requests, self.duration = self.parse_rate(self.rate)
 
     def get_cache_key(self, request, view):
         # Retrieve the API key from the request header
@@ -48,7 +59,15 @@ class ApiKeyRateThrottle(SimpleRateThrottle):
 
 class ServiceTokenRateThrottle(SimpleRateThrottle):
     scope = "service_token"
-    rate = "300/minute"
+
+    def __init__(self):
+        super().__init__()
+        # Override the rate attribute dynamically from instance configuration
+        (rate_limit,) = get_configuration_value(
+            [{"key": "RATE_LIMIT_SERVICE_TOKEN", "default": os.environ.get("RATE_LIMIT_SERVICE_TOKEN", "300/minute")}]
+        )
+        self.rate = rate_limit or "300/minute"
+        self.num_requests, self.duration = self.parse_rate(self.rate)
 
     def get_cache_key(self, request, view):
         # Retrieve the API key from the request header
