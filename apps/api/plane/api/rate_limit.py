@@ -12,8 +12,9 @@ class ApiKeyRateThrottle(SimpleRateThrottle):
     scope = "api_key"
 
     def __init__(self):
-        super().__init__()
-        # Override the rate attribute dynamically from instance configuration
+        # Get rate from instance configuration BEFORE calling super().__init__()
+        # This is necessary because super().__init__() calls get_rate() which
+        # looks for the scope in DEFAULT_THROTTLE_RATES
         (rate_limit,) = get_configuration_value(
             [{"key": "RATE_LIMIT_API_KEY", "default": os.environ.get("API_KEY_RATE_LIMIT", "60/minute")}]
         )
@@ -61,8 +62,7 @@ class ServiceTokenRateThrottle(SimpleRateThrottle):
     scope = "service_token"
 
     def __init__(self):
-        super().__init__()
-        # Override the rate attribute dynamically from instance configuration
+        # Get rate from instance configuration BEFORE calling super().__init__()
         (rate_limit,) = get_configuration_value(
             [{"key": "RATE_LIMIT_SERVICE_TOKEN", "default": os.environ.get("RATE_LIMIT_SERVICE_TOKEN", "300/minute")}]
         )

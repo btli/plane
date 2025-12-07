@@ -18,8 +18,7 @@ class AuthenticationThrottle(AnonRateThrottle):
     scope = "authentication"
 
     def __init__(self):
-        super().__init__()
-        # Override the rate attribute dynamically from instance configuration
+        # Get rate from instance configuration BEFORE calling super().__init__()
         (rate_limit,) = get_configuration_value(
             [{"key": "RATE_LIMIT_AUTHENTICATION", "default": os.environ.get("RATE_LIMIT_AUTHENTICATION", "30/minute")}]
         )
@@ -45,8 +44,7 @@ class EmailVerificationThrottle(UserRateThrottle):
     scope = "email_verification"
 
     def __init__(self):
-        super().__init__()
-        # Override the rate attribute dynamically from instance configuration
+        # Get rate from instance configuration BEFORE calling super().__init__()
         (rate_limit,) = get_configuration_value(
             [
                 {
