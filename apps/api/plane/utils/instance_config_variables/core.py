@@ -219,6 +219,45 @@ intercom_config_variables = [
     },
 ]
 
+rate_limit_config_variables = [
+    {
+        "key": "RATE_LIMIT_API_KEY",
+        "value": os.environ.get("RATE_LIMIT_API_KEY", "60/minute"),
+        "category": "RATE_LIMITS",
+        "is_encrypted": False,
+    },
+    {
+        "key": "RATE_LIMIT_SERVICE_TOKEN",
+        "value": os.environ.get("RATE_LIMIT_SERVICE_TOKEN", "300/minute"),
+        "category": "RATE_LIMITS",
+        "is_encrypted": False,
+    },
+    {
+        "key": "RATE_LIMIT_AUTHENTICATION",
+        "value": os.environ.get("RATE_LIMIT_AUTHENTICATION", "30/minute"),
+        "category": "RATE_LIMITS",
+        "is_encrypted": False,
+    },
+    {
+        "key": "RATE_LIMIT_EMAIL_VERIFICATION",
+        "value": os.environ.get("RATE_LIMIT_EMAIL_VERIFICATION", "3/hour"),
+        "category": "RATE_LIMITS",
+        "is_encrypted": False,
+    },
+    {
+        "key": "RATE_LIMIT_ASSET",
+        "value": os.environ.get("RATE_LIMIT_ASSET", "5/minute"),
+        "category": "RATE_LIMITS",
+        "is_encrypted": False,
+    },
+    {
+        "key": "RATE_LIMIT_ANONYMOUS",
+        "value": os.environ.get("RATE_LIMIT_ANONYMOUS", "30/minute"),
+        "category": "RATE_LIMITS",
+        "is_encrypted": False,
+    },
+]
+
 core_config_variables = [
     *authentication_config_variables,
     *workspace_management_config_variables,
@@ -230,4 +269,5 @@ core_config_variables = [
     *llm_config_variables,
     *unsplash_config_variables,
     *intercom_config_variables,
+    *rate_limit_config_variables,
 ]

@@ -4,6 +4,7 @@ import type {
   TInstanceEmailConfigurationKeys,
   TInstanceImageConfigurationKeys,
   TInstanceAuthenticationKeys,
+  TInstanceRateLimitConfigurationKeys,
   TInstanceWorkspaceConfigurationKeys,
 } from "./";
 
@@ -83,6 +84,7 @@ export type TInstanceConfigurationKeys =
   | TInstanceImageConfigurationKeys
   | TInstanceAuthenticationKeys
   | TInstanceIntercomConfigurationKeys
+  | TInstanceRateLimitConfigurationKeys
   | TInstanceWorkspaceConfigurationKeys;
 
 export interface IInstanceConfiguration {

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Image, BrainCog, Cog, Lock, Mail } from "lucide-react";
+import { Image, BrainCog, Cog, Gauge, Lock, Mail } from "lucide-react";
 // plane internal packages
 import { WorkspaceIcon } from "@plane/propel/icons";
 import { Tooltip } from "@plane/propel/tooltip";
@@ -45,6 +45,12 @@ const INSTANCE_ADMIN_LINKS = [
     name: "Images in Plane",
     description: "Allow third-party image libraries.",
     href: `/image/`,
+  },
+  {
+    Icon: Gauge,
+    name: "Rate Limits",
+    description: "Configure API rate limiting.",
+    href: `/rate-limits/`,
   },
 ];
 
