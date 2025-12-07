@@ -23,6 +23,9 @@ export const coreRoutes: RouteConfigEntry[] = [
     route("accounts/set-password", "./(all)/accounts/set-password/page.tsx"),
   ]),
 
+  // CLI auth handoff
+  layout("./(all)/cli/layout.tsx", [route("cli/connect", "./(all)/cli/connect/page.tsx")]),
+
   // Create Workspace
   layout("./(all)/create-workspace/layout.tsx", [route("create-workspace", "./(all)/create-workspace/page.tsx")]),
 
