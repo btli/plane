@@ -294,3 +294,36 @@ class StateDetailAPIEndpoint(BaseAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StateMarkDefaultAPIEndpoint(BaseAPIView):
+    """State Mark Default Endpoint"""
+
+    permission_classes = [ProjectEntityPermission]
+
+    def post(self, request, slug, project_id, pk):
+        """Mark state as default
+
+        Set a state as the default state for new issues in the project.
+        Only one state can be the default at a time.
+        """
+        # Get the state to mark as default
+        state = State.objects.get(
+            workspace__slug=slug,
+            project_id=project_id,
+            pk=pk,
+            is_triage=False,
+        )
+
+        # Remove default from all other states in the project
+        State.objects.filter(
+            workspace__slug=slug,
+            project_id=project_id,
+            default=True,
+        ).update(default=False)
+
+        # Set this state as default
+        state.default = True
+        state.save()
+
+        return Response(StateSerializer(state).data, status=status.HTTP_200_OK)

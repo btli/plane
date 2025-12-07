@@ -1245,3 +1245,35 @@ class TransferCycleIssueAPIEndpoint(BaseAPIView):
                 {"error": result.get("error")},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
+class CycleFavoriteAPIEndpoint(BaseAPIView):
+    """Cycle Favorite Endpoint"""
+
+    permission_classes = [ProjectEntityPermission]
+
+    def post(self, request, slug, project_id, pk):
+        """Add cycle to favorites"""
+        cycle = Cycle.objects.get(
+            pk=pk, workspace__slug=slug, project_id=project_id
+        )
+        UserFavorite.objects.create(
+            project_id=project_id,
+            entity_identifier=pk,
+            entity_type="cycle",
+            user=request.user,
+            workspace_id=cycle.workspace_id,
+        )
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, slug, project_id, pk):
+        """Remove cycle from favorites"""
+        cycle_favorite = UserFavorite.objects.get(
+            project_id=project_id,
+            user=request.user,
+            workspace__slug=slug,
+            entity_identifier=pk,
+            entity_type="cycle",
+        )
+        cycle_favorite.delete(soft=False)
+        return Response(status=status.HTTP_204_NO_CONTENT)
