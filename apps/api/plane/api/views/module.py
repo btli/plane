@@ -1071,3 +1071,35 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
         module.archived_at = None
         module.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ModuleFavoriteAPIEndpoint(BaseAPIView):
+    """Module Favorite Endpoint"""
+
+    permission_classes = [ProjectEntityPermission]
+
+    def post(self, request, slug, project_id, pk):
+        """Add module to favorites"""
+        module = Module.objects.get(
+            pk=pk, workspace__slug=slug, project_id=project_id
+        )
+        UserFavorite.objects.create(
+            project_id=project_id,
+            entity_identifier=pk,
+            entity_type="module",
+            user=request.user,
+            workspace_id=module.workspace_id,
+        )
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, slug, project_id, pk):
+        """Remove module from favorites"""
+        module_favorite = UserFavorite.objects.get(
+            project_id=project_id,
+            user=request.user,
+            workspace__slug=slug,
+            entity_identifier=pk,
+            entity_type="module",
+        )
+        module_favorite.delete(soft=False)
+        return Response(status=status.HTTP_204_NO_CONTENT)

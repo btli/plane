@@ -6,6 +6,7 @@ from plane.api.views import (
     ModuleIssueListCreateAPIEndpoint,
     ModuleIssueDetailAPIEndpoint,
     ModuleArchiveUnarchiveAPIEndpoint,
+    ModuleFavoriteAPIEndpoint,
 )
 
 urlpatterns = [
@@ -43,5 +44,10 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/archived-modules/<uuid:pk>/unarchive/",
         ModuleArchiveUnarchiveAPIEndpoint.as_view(http_method_names=["delete"]),
         name="module-unarchive",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/modules/<uuid:pk>/favorite/",
+        ModuleFavoriteAPIEndpoint.as_view(http_method_names=["post", "delete"]),
+        name="module-favorite",
     ),
 ]
