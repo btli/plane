@@ -162,7 +162,6 @@ from .module.issue import ModuleIssueViewSet
 from .module.archive import ModuleArchiveUnarchiveEndpoint
 
 from .api import ApiTokenEndpoint, ServiceApiTokenEndpoint
-from .cli import CLICredentialTokenEndpoint
 
 from .page.base import (
     PageViewSet,

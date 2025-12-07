@@ -166,33 +166,3 @@ jobs:
           echo "APP NAME ::: $APP_NAME"
           echo "INGRESS HOSTNAME ::: $INGRESS_HOSTNAME"
           echo "****************************************"
-
-  build-cli-executable:
-    name: Build Plane CLI executable
-    needs: [branch_build_setup]
-    runs-on: ubuntu-latest
-    env:
-      FLAT_BRANCH_NAME: ${{ needs.branch_build_setup.outputs.flat_branch_name }}
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Build CLI binary
-        run: |
-          uv run --project apps/cli --extra dev pyinstaller --onefile --name plane --distpath dist apps/cli/plane/main.py
-
-      - name: Upload CLI artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: plane-cli-${{ env.FLAT_BRANCH_NAME }}
-          path: dist/plane
