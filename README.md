@@ -136,6 +136,13 @@ See [CONTRIBUTING](./CONTRIBUTING.md)
 
 Explore Plane's [product documentation](https://docs.plane.so/) and [developer documentation](https://developers.plane.so/) to learn about features, setup, and usage.
 
+## 💻 CLI (v1 API)
+
+- Run directly with `uv`: `uv run --project apps/cli plane --help`
+- Authenticate: `uv run --project apps/cli plane auth` (opens a browser to issue a PAT and saves it to `~/.plane/config.yaml`)
+- Commands include `workspaces list`, `projects list --workspace <slug>`, `issues list/create`, and `whoami`.
+- See `docs/claude/plane-cli.md` for full instructions.
+
 ## ❤️ Community
 
 Join the Plane community on [GitHub Discussions](https://github.com/orgs/makeplane/discussions) and our [Discord server](https://discord.com/invite/A92xrEGCge). We follow a [Code of conduct](https://github.com/makeplane/plane/blob/master/CODE_OF_CONDUCT.md) in all our community channels.
