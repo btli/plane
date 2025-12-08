@@ -119,6 +119,7 @@ export type EditorRefApi = {
   getHeadings: () => IMarking[];
   getMarkDown: () => string;
   getSelectedText: () => string | null;
+  setMarkdown: (markdown: string, emitUpdate?: boolean) => void;
   insertText: (contentHTML: string, insertOnNextLine?: boolean) => void;
   isAnyDropbarOpen: () => boolean;
   isEditorReadyToDiscard: () => boolean;

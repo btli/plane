@@ -3,7 +3,7 @@ import type { Editor } from "@tiptap/core";
 import { DOMSerializer } from "@tiptap/pm/model";
 import * as Y from "yjs";
 // plane imports
-import { convertHTMLToMarkdown } from "@plane/utils";
+import { convertHTMLToMarkdown, convertMarkdownToHTML } from "@plane/utils";
 // components
 import { getEditorMenuItems } from "@/components/menus";
 // constants
@@ -88,6 +88,20 @@ export const getEditorRefHelpers = (args: TArgs): EditorRefApi => {
         metaData,
       });
       return markdown;
+    },
+    setMarkdown: (markdown, emitUpdate = false) => {
+      if (!editor) return;
+      // convert markdown to HTML
+      const html = convertMarkdownToHTML({ markdown });
+      // set the editor content
+      editor
+        ?.chain()
+        .setMeta(CORE_EDITOR_META.SKIP_FILE_DELETION, true)
+        .setMeta(CORE_EDITOR_META.INTENTIONAL_DELETION, true)
+        .setContent(html, emitUpdate, {
+          preserveWhitespace: true,
+        })
+        .run();
     },
     isAnyDropbarOpen: () => {
       if (!editor) return false;

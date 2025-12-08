@@ -8,6 +8,7 @@ import {
   Bold,
   CaseSensitive,
   Code2,
+  FileCode,
   Heading1,
   Heading2,
   Heading3,
@@ -172,6 +173,15 @@ const COMPLEX_ITEMS: ToolbarMenuItem<"table" | "image">[] = [
   { itemKey: "table", renderKey: "table", name: "Table", icon: Table, editors: ["document"] },
   IMAGE_ITEM,
 ];
+
+// Markdown mode toggle item - this is a special item that doesn't use standard editor commands
+export const MARKDOWN_TOGGLE_ITEM = {
+  renderKey: "markdown-mode",
+  name: "Markdown",
+  icon: FileCode,
+  shortcut: ["Cmd", "Shift", "M"],
+  editors: ["lite", "document"] as TEditorTypes[],
+};
 
 export const TOOLBAR_ITEMS: {
   [editorType in TEditorTypes]: {
